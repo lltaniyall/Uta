@@ -1,6 +1,6 @@
 const ARCHIVES = [
   {
-    "date": "2026-12-22",
+    "date": "2026-12-21",
     "title": "【#歌枠│KARAOKE 】懐かし昭和ソング歌枠！ポロリもあるかも！？(ない)【初見歓迎】",
     "videoId": "f-tmIBejRNE",
     "songs": [
