@@ -64,3 +64,18 @@ footer{padding:3rem 8vw;border-top:1px solid var(--line);display:flex;gap:1.5rem
   .historyCard{grid-template-columns:105px 1fr}
   .historyListen{grid-column:2;text-align:left}
 }
+
+
+/* ARTIST PAGE v6 */
+.artistLink{display:flex;align-items:center;justify-content:space-between;gap:1rem;text-decoration:none}
+.artistLink:hover{color:var(--pink)}
+.artistSongList{border-top:1px solid var(--line)}
+.artistSongCard{display:grid;grid-template-columns:1fr 180px 28px;gap:1rem;align-items:center;padding:1.15rem 1rem;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.artistSongCard:hover{background:rgba(229,27,141,.06)}
+.artistSongTitle{font-weight:700}
+.artistSongCount{text-align:right;color:var(--muted);font:700 .7rem "Space Grotesk";letter-spacing:.06em}
+.artistSongArrow{text-align:right;color:var(--pink)}
+@media(max-width:760px){
+  .artistSongCard{grid-template-columns:1fr 95px 22px;padding:.95rem .6rem}
+  .artistSongCount{font-size:.62rem}
+}

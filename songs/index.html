@@ -87,11 +87,11 @@ function render(){
   $("#empty").hidden = filtered.length > 0;
 
   $("#songList").innerHTML = filtered.map(item => `
-    <a class="songDbRow songDbLink" href="${makeHistoryUrl(item)}">
-      <div class="songTitleLink">${item.title}<span class="songArrow">↗</span></div>
-      <div class="songArtist">${item.artist}</div>
+    <div class="songDbRow">
+      <a class="songTitleLink" href="${makeHistoryUrl(item)}">${item.title}<span class="songArrow">↗</span></a>
+      <a class="songArtist artistLink" href="../artists/?artist=${encodeURIComponent(item.artist)}">${item.artist}<span class="songArrow">↗</span></a>
       <div class="songCount">${item.count}</div>
-    </a>
+    </div>
   `).join("");
 
   document.querySelectorAll(".sortBtn").forEach(btn => {
