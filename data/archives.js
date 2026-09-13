@@ -1,8 +1,8 @@
 const ARCHIVES = [
   {
     "date": "2026-12-21",
-    "title": "冬の夜歌 / DEMO",
-    "videoId": "M7lc1UVf-VE",
+    "title": "【#歌枠│KARAOKE 】懐かし昭和ソング歌枠！ポロリもあるかも！？(ない)【初見歓迎】後このタイトルをありえんど長くしたらどうなるかてるとしたいんだけど",
+    "videoId": "f-tmIBejRNE",
     "songs": [
       {
         "title": "オープニング",
@@ -59,6 +59,7 @@ const ARCHIVES = [
       },
       {
         "title": "KING",
+         artist: "Kanaria",
         "time": 1284,
         "type": "song"
       }
