@@ -1,7 +1,7 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SONG DATABASE | 谷谷</title><link rel="stylesheet" href="../style.css"></head><body>
 <header><a class="logo" href="../">TANIYA<span>_</span></a><nav><a href="../archive/">ARCHIVE</a><a href="./">SONGS</a></nav></header>
 <main>
-<section class="hero"><p class="eyebrow">SONG DATABASE</p><h1>SONGS</h1><p>歌った曲を一覧で管理。曲名・アーティスト名・歌唱回数で並べ替えでき、曲名をクリックすると過去の歌唱アーカイブを確認できます。</p></section>
+<section class="hero"><p class="eyebrow">SONG DATABASE</p><h1>SONGS</h1><p>曲名・アーティスト名から検索。曲名・アーティスト名・歌唱回数で並べ替えでき、曲名をクリックすると歌唱履歴ページへ移動します。</p></section>
 
 <section class="section">
   <div class="toolbar">
@@ -38,21 +38,16 @@ function buildSongData(){
       .forEach(song => {
         const artist = song.artist || "未登録";
         const key = `${song.title}|||${artist}`;
+
         if(!map.has(key)){
           map.set(key, {
             title: song.title,
             artist,
-            count: 0,
-            performances: []
+            count: 0
           });
         }
-        const item = map.get(key);
-        item.count++;
-        item.performances.push({
-          date: archive.date,
-          archiveTitle: archive.title,
-          time: song.time
-        });
+
+        map.get(key).count++;
       });
   });
 
@@ -63,12 +58,22 @@ const songData = buildSongData();
 
 function compare(a,b){
   let result = 0;
+
   if(sortKey === "count"){
     result = a.count - b.count;
-  }else{
+  } else {
     result = collator.compare(a[sortKey], b[sortKey]);
   }
+
   return sortDir === "asc" ? result : -result;
+}
+
+function makeHistoryUrl(item){
+  const p = new URLSearchParams({
+    song: item.title,
+    artist: item.artist
+  });
+  return `./history/?${p.toString()}`;
 }
 
 function render(){
@@ -81,45 +86,21 @@ function render(){
   $("#count").textContent = filtered.length;
   $("#empty").hidden = filtered.length > 0;
 
-  $("#songList").innerHTML = filtered.map((item, index) => `
-    <div class="songDbItem">
-      <div class="songDbRow">
-        <button class="songTitleBtn" aria-expanded="false" aria-controls="song-detail-${index}">
-          <span>${item.title}</span><span class="expandMark">＋</span>
-        </button>
-        <div class="songArtist">${item.artist}</div>
-        <div class="songCount">${item.count}</div>
-      </div>
-      <div class="songPerformances" id="song-detail-${index}" hidden>
-        ${item.performances
-          .sort((a,b)=>b.date.localeCompare(a.date))
-          .map(p => `
-            <a class="performanceLink" href="../archive/${p.date}/?t=${p.time}">
-              <span class="performanceDate">${p.date.replaceAll("-",".")}</span>
-              <span class="performanceTitle">${p.archiveTitle}</span>
-              <span class="performanceArrow">↗</span>
-            </a>
-          `).join("")}
-      </div>
-    </div>
+  $("#songList").innerHTML = filtered.map(item => `
+    <a class="songDbRow songDbLink" href="${makeHistoryUrl(item)}">
+      <div class="songTitleLink">${item.title}<span class="songArrow">↗</span></div>
+      <div class="songArtist">${item.artist}</div>
+      <div class="songCount">${item.count}</div>
+    </a>
   `).join("");
-
-  document.querySelectorAll(".songTitleBtn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const detail = btn.closest(".songDbItem").querySelector(".songPerformances");
-      const open = !detail.hidden;
-      detail.hidden = open;
-      btn.setAttribute("aria-expanded", String(!open));
-      btn.querySelector(".expandMark").textContent = open ? "＋" : "－";
-    });
-  });
 
   document.querySelectorAll(".sortBtn").forEach(btn => {
     const mark = btn.querySelector(".sortMark");
+
     if(btn.dataset.key === sortKey){
       mark.textContent = sortDir === "asc" ? "↑" : "↓";
       btn.classList.add("active");
-    }else{
+    } else {
       mark.textContent = "↕";
       btn.classList.remove("active");
     }
@@ -129,12 +110,14 @@ function render(){
 document.querySelectorAll(".sortBtn").forEach(btn => {
   btn.addEventListener("click", () => {
     const key = btn.dataset.key;
+
     if(sortKey === key){
       sortDir = sortDir === "asc" ? "desc" : "asc";
-    }else{
+    } else {
       sortKey = key;
       sortDir = "asc";
     }
+
     render();
   });
 });

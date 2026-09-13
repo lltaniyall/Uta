@@ -37,3 +37,30 @@ footer{padding:3rem 8vw;border-top:1px solid var(--line);display:flex;gap:1.5rem
   .sortBtn,.songTitleBtn,.songArtist,.songCount{padding:.95rem .6rem}
   .performanceLink{grid-template-columns:95px 1fr 20px;padding:.9rem .7rem}
 }
+
+
+/* SONG DATABASE v5 */
+.songDbLink{color:inherit;text-decoration:none}
+.songTitleLink{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem 1rem;font-weight:700}
+.songDbLink:hover{background:rgba(229,27,141,.06)}
+.songDbLink:hover .songTitleLink{color:var(--pink)}
+.songArrow{color:var(--pink);font-family:"Space Grotesk"}
+.historyHero{padding-top:6vw}
+.historyTitle{font:700 clamp(3rem,8vw,7rem)/.9 "Space Grotesk";letter-spacing:-.06em;margin:1rem 0 2rem}
+.historyMeta{display:flex;gap:3rem;flex-wrap:wrap}
+.historyMeta div{display:flex;flex-direction:column;gap:.45rem}
+.historyMeta span{color:var(--green);font:700 .65rem "Space Grotesk";letter-spacing:.14em}
+.historyMeta strong{font-size:1.1rem}
+.historyMeta i{font-style:normal;color:var(--pink)}
+.historyList{border-top:1px solid var(--line)}
+.historyCard{display:grid;grid-template-columns:150px 1fr 110px;gap:1rem;align-items:center;padding:1.2rem 1rem;border-bottom:1px solid var(--line);color:inherit}
+.historyCard:hover{background:rgba(229,27,141,.06)}
+.historyDate{color:var(--pink);font:700 .75rem "Space Grotesk"}
+.historyArchiveTitle{font-weight:700}
+.historyListen{text-align:right;color:var(--muted);font:700 .68rem "Space Grotesk";letter-spacing:.08em}
+.historyCard:hover .historyListen{color:var(--text)}
+@media(max-width:760px){
+  .historyHero{padding-top:12vw}
+  .historyCard{grid-template-columns:105px 1fr}
+  .historyListen{grid-column:2;text-align:left}
+}
