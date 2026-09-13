@@ -28,6 +28,26 @@
     </div>
   </section>
 
+
+
+  <section class="section">
+    <p class="eyebrow">EXPLORE</p>
+    <h2>歌から見る？ 配信から見る？</h2>
+    <div class="cards">
+      <a class="card" href="./archive/">
+        <span class="card-date">ARCHIVE</span>
+        <h3>配信日から探す</h3>
+        <p class="card-meta">日ごとに分かれた歌枠ページへ</p>
+      </a>
+      <a class="card" href="./songs/">
+        <span class="card-date">SONG DATABASE</span>
+        <h3>曲名から探す</h3>
+        <p class="card-meta">過去に歌った曲を横断検索</p>
+      </a>
+    </div>
+  </section>
+
+
   <section class="section" id="latest">
     <div class="sectionHead">
       <div>
@@ -38,6 +58,7 @@
     </div>
     <div id="latestList" class="latestList"></div>
   </section>
+
 
   <section class="section" id="ranking">
     <div class="sectionHead">
@@ -59,6 +80,7 @@
     </div>
   </section>
 
+
   <section class="section" id="socials">
     <p class="eyebrow">FOLLOW / SHOP</p>
     <h2>SNS & LINKS</h2>
@@ -66,23 +88,6 @@
     <p id="socialNote" class="socialNote" hidden>
       SNSのURLは <code>data/site-config.js</code> に設定すると有効になります。
     </p>
-  </section>
-
-  <section class="section">
-    <p class="eyebrow">EXPLORE</p>
-    <h2>歌から見る？ 配信から見る？</h2>
-    <div class="cards">
-      <a class="card" href="./archive/">
-        <span class="card-date">ARCHIVE</span>
-        <h3>配信日から探す</h3>
-        <p class="card-meta">日ごとに分かれた歌枠ページへ</p>
-      </a>
-      <a class="card" href="./songs/">
-        <span class="card-date">SONG DATABASE</span>
-        <h3>曲名から探す</h3>
-        <p class="card-meta">過去に歌った曲を横断検索</p>
-      </a>
-    </div>
   </section>
 </main>
 
@@ -165,17 +170,14 @@ document.getElementById("rankingList").innerHTML = ranking.map((item, index) => 
   </div>
 `).join("");
 
-// Socials
-const socials = [
-  {key:"youtube", label:"YouTube", sub:"VIDEOS / STREAMS"},
-  {key:"x", label:"X", sub:"TWITTER"},
-  {key:"booth", label:"BOOTH", sub:"SHOP"},
-  {key:"bluesky", label:"Bluesky", sub:"SOCIAL"}
-];
+// Socials: add/remove items only in data/site-config.js
+const socials = Array.isArray(SITE_CONFIG?.socials) ? SITE_CONFIG.socials : [];
 
 let hasUnsetSocial = false;
 document.getElementById("socialLinks").innerHTML = socials.map((item, index) => {
-  const url = SITE_CONFIG?.socials?.[item.key] || "";
+  const label = item.label || `LINK ${index + 1}`;
+  const sub = item.sub || "SOCIAL";
+  const url = item.url || "";
   const enabled = /^https?:\/\//i.test(url);
 
   if(!enabled) hasUnsetSocial = true;
@@ -183,14 +185,14 @@ document.getElementById("socialLinks").innerHTML = socials.map((item, index) => 
   return enabled
     ? `<a class="socialCard" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">
          <span class="socialIndex">${String(index+1).padStart(2,"0")}</span>
-         <strong>${item.label}</strong>
-         <small>${item.sub}</small>
+         <strong>${escapeHtml(label)}</strong>
+         <small>${escapeHtml(sub)}</small>
          <span class="socialArrow">↗</span>
        </a>`
     : `<div class="socialCard socialCardDisabled" aria-disabled="true">
          <span class="socialIndex">${String(index+1).padStart(2,"0")}</span>
-         <strong>${item.label}</strong>
-         <small>${item.sub}</small>
+         <strong>${escapeHtml(label)}</strong>
+         <small>${escapeHtml(sub)}</small>
          <span class="socialArrow">URL SETTING</span>
        </div>`;
 }).join("");

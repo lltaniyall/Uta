@@ -140,3 +140,23 @@ footer{padding:3rem 8vw;border-top:1px solid var(--line);display:flex;gap:1.5rem
   .rankingCount{font-size:1rem}
   .socialGrid{grid-template-columns:1fr}
 }
+
+
+/* TOP PAGE v8: flexible social links */
+.socialGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+}
+.socialGrid > .socialCard:last-child:nth-child(odd){
+  grid-column:1 / -1;
+  width:calc(50% - .5rem);
+  justify-self:center;
+}
+@media(max-width:760px){
+  .socialGrid{grid-template-columns:1fr}
+  .socialGrid > .socialCard:last-child:nth-child(odd){
+    grid-column:auto;
+    width:100%;
+  }
+}
