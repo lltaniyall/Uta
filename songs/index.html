@@ -1,8 +1,145 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SONG DATABASE | 谷谷</title><link rel="stylesheet" href="../style.css"></head><body>
 <header><a class="logo" href="../">TANIYA<span>_</span></a><nav><a href="../archive/">ARCHIVE</a><a href="./">SONGS</a></nav></header>
-<main><section class="hero"><p class="eyebrow">SONG DATABASE</p><h1>SONGS</h1><p>曲名・配信名・日付から横断検索。クリックすると該当する日付別アーカイブの、その歌唱位置へ直接移動します。</p></section>
-<section class="section"><div class="toolbar"><label class="search"><span>SEARCH</span><input id="search" type="search" placeholder="曲名・配信名・日付を検索…"></label><div class="stats"><strong id="count">0</strong><span>SONGS</span></div></div><div id="results"></div><p id="empty" hidden>該当する曲がありません。</p></section></main><footer><b>TANIYA</b><span>SONG DATABASE</span></footer>
-<script src="../data/archives.js"></script><script>
-const $=s=>document.querySelector(s);const fmt=x=>{x=Math.floor(x||0);let h=Math.floor(x/3600),m=Math.floor(x%3600/60),s=x%60;return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`};
-function render(q=""){q=q.toLowerCase().trim();let total=0,out="";ARCHIVES.forEach(a=>{const ss=a.songs.filter(s=>s.type==="song"&&(`${s.title} ${a.title} ${a.date}`).toLowerCase().includes(q));total+=ss.length;if(ss.length)out+=`<div class="group"><div class="groupHead"><h3>${a.title}</h3><span>${a.date}</span></div>${ss.map(s=>`<a class="song" href="../archive/${a.date}/?t=${s.time}"><span class="time">${fmt(s.time)}</span><b>${s.title}</b><span class="muted datecol">${a.date}</span><span>↗</span></a>`).join("")}</div>`});$("#results").innerHTML=out;$("#count").textContent=total;$("#empty").hidden=!!total}$("#search").oninput=e=>render(e.target.value);render();
-</script></body></html>
+<main>
+<section class="hero"><p class="eyebrow">SONG DATABASE</p><h1>SONGS</h1><p>歌った曲を一覧で管理。曲名・アーティスト名・歌唱回数で並べ替えでき、曲名をクリックすると過去の歌唱アーカイブを確認できます。</p></section>
+
+<section class="section">
+  <div class="toolbar">
+    <label class="search"><span>SEARCH</span><input id="search" type="search" placeholder="曲名・アーティスト名を検索…"></label>
+    <div class="stats"><strong id="count">0</strong><span>SONGS</span></div>
+  </div>
+
+  <div class="songTableWrap">
+    <div class="songTableHead">
+      <button class="sortBtn" data-key="title">曲名 <span class="sortMark">↕</span></button>
+      <button class="sortBtn" data-key="artist">アーティスト <span class="sortMark">↕</span></button>
+      <button class="sortBtn countHead" data-key="count">歌唱回数 <span class="sortMark">↕</span></button>
+    </div>
+    <div id="songList"></div>
+  </div>
+  <p id="empty" hidden>該当する曲がありません。</p>
+</section>
+</main>
+<footer><b>TANIYA</b><span>SONG DATABASE</span></footer>
+
+<script src="../data/archives.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const collator = new Intl.Collator("ja", {numeric:true, sensitivity:"base"});
+let sortKey = "title";
+let sortDir = "asc";
+
+function buildSongData(){
+  const map = new Map();
+
+  ARCHIVES.forEach(archive => {
+    archive.songs
+      .filter(song => song.type === "song")
+      .forEach(song => {
+        const artist = song.artist || "未登録";
+        const key = `${song.title}|||${artist}`;
+        if(!map.has(key)){
+          map.set(key, {
+            title: song.title,
+            artist,
+            count: 0,
+            performances: []
+          });
+        }
+        const item = map.get(key);
+        item.count++;
+        item.performances.push({
+          date: archive.date,
+          archiveTitle: archive.title,
+          time: song.time
+        });
+      });
+  });
+
+  return [...map.values()];
+}
+
+const songData = buildSongData();
+
+function compare(a,b){
+  let result = 0;
+  if(sortKey === "count"){
+    result = a.count - b.count;
+  }else{
+    result = collator.compare(a[sortKey], b[sortKey]);
+  }
+  return sortDir === "asc" ? result : -result;
+}
+
+function render(){
+  const q = $("#search").value.trim().toLowerCase();
+
+  const filtered = songData
+    .filter(item => (`${item.title} ${item.artist}`).toLowerCase().includes(q))
+    .sort(compare);
+
+  $("#count").textContent = filtered.length;
+  $("#empty").hidden = filtered.length > 0;
+
+  $("#songList").innerHTML = filtered.map((item, index) => `
+    <div class="songDbItem">
+      <div class="songDbRow">
+        <button class="songTitleBtn" aria-expanded="false" aria-controls="song-detail-${index}">
+          <span>${item.title}</span><span class="expandMark">＋</span>
+        </button>
+        <div class="songArtist">${item.artist}</div>
+        <div class="songCount">${item.count}</div>
+      </div>
+      <div class="songPerformances" id="song-detail-${index}" hidden>
+        ${item.performances
+          .sort((a,b)=>b.date.localeCompare(a.date))
+          .map(p => `
+            <a class="performanceLink" href="../archive/${p.date}/?t=${p.time}">
+              <span class="performanceDate">${p.date.replaceAll("-",".")}</span>
+              <span class="performanceTitle">${p.archiveTitle}</span>
+              <span class="performanceArrow">↗</span>
+            </a>
+          `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  document.querySelectorAll(".songTitleBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const detail = btn.closest(".songDbItem").querySelector(".songPerformances");
+      const open = !detail.hidden;
+      detail.hidden = open;
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.querySelector(".expandMark").textContent = open ? "＋" : "－";
+    });
+  });
+
+  document.querySelectorAll(".sortBtn").forEach(btn => {
+    const mark = btn.querySelector(".sortMark");
+    if(btn.dataset.key === sortKey){
+      mark.textContent = sortDir === "asc" ? "↑" : "↓";
+      btn.classList.add("active");
+    }else{
+      mark.textContent = "↕";
+      btn.classList.remove("active");
+    }
+  });
+}
+
+document.querySelectorAll(".sortBtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const key = btn.dataset.key;
+    if(sortKey === key){
+      sortDir = sortDir === "asc" ? "desc" : "asc";
+    }else{
+      sortKey = key;
+      sortDir = "asc";
+    }
+    render();
+  });
+});
+
+$("#search").addEventListener("input", render);
+render();
+</script>
+</body></html>

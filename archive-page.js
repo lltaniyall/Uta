@@ -1,7 +1,7 @@
 let player,ready=false,currentTime=0;const $=s=>document.querySelector(s);const date=location.pathname.split("/").filter(Boolean).pop();const archive=ARCHIVES.find(a=>a.date===date);const fmt=x=>{x=Math.floor(x||0);let h=Math.floor(x/3600),m=Math.floor(x%3600/60),s=x%60;return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`};
 if(!archive){document.body.innerHTML="<p style='padding:40px;color:white'>Archive not found.</p>";throw new Error("Archive not found")}
 $("#dateLabel").textContent=archive.date;$("#archiveTitle").textContent=archive.title;$("#meta").textContent=`${archive.songs.filter(s=>s.type==="song").length} SONGS`;$("#footDate").textContent=archive.date;
-$("#tracks").innerHTML=archive.songs.map(s=>`<button class="track" data-t="${s.time}"><span class="time">${fmt(s.time)}</span><span>${s.title}</span></button>`).join("");
+$("#tracks").innerHTML=archive.songs.map(s=>`<button class="track" data-t="${s.time}"><span class="time">${fmt(s.time)}</span><span class="trackInfo"><span class="trackTitle">${s.title}</span>${s.type==="song"&&s.artist?`<span class="trackArtist"> / ${s.artist}</span>`:""}</span></button>`).join("");
 document.querySelectorAll(".track").forEach(b=>b.onclick=()=>seek(+b.dataset.t,true));
 function seek(t,play=false){currentTime=t;if(!ready)return;player.seekTo(t,true);if(play)player.playVideo();history.replaceState(null,"",`?t=${t}`)}
 function onYouTubeIframeAPIReady(){const t=+new URLSearchParams(location.search).get("t")||0;currentTime=t;player=new YT.Player("player",{videoId:archive.videoId,playerVars:{rel:0,start:t},events:{onReady:()=>{ready=true;if(t)player.seekTo(t,true);setInterval(update,1000)}}})}

@@ -4,9 +4,36 @@
 header{height:72px;padding:0 6vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,11,14,.88);backdrop-filter:blur(14px);z-index:10}.logo{font:700 1.1rem "Space Grotesk";letter-spacing:.16em}.logo span{color:var(--pink)}nav{display:flex;gap:1.4rem}nav a{font:700 .68rem "Space Grotesk";letter-spacing:.12em;color:var(--muted)}
 .hero{padding:9vw 8vw 7vw;min-height:54vh;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 80% 20%,rgba(229,27,141,.12),transparent 35%)}.eyebrow{color:var(--green);font:700 .7rem "Space Grotesk";letter-spacing:.2em}.hero h1{font:700 clamp(3.7rem,10vw,8.5rem)/.82 "Space Grotesk";letter-spacing:-.07em;margin:1rem 0 2rem}.hero h1 em{font-style:normal;color:var(--pink)}.hero p{color:var(--muted);line-height:2;max-width:720px}
 .section{padding:7vw 8vw;border-top:1px solid var(--line)}.section h2{font-size:clamp(2rem,4vw,4rem);letter-spacing:-.05em;margin:.4rem 0 2rem}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}#archiveCards{grid-template-columns:1fr}.card{display:block;border:1px solid var(--line);background:var(--surface);padding:2rem;min-height:190px}.card:hover{border-color:var(--pink);transform:translateY(-2px);transition:.18s}.card-date{color:var(--pink);font:700 .75rem "Space Grotesk";letter-spacing:.12em}.card h3{font-size:1.4rem;margin:1rem 0}.card-meta{color:var(--muted);font-size:.75rem}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{display:block;border:1px solid var(--line);background:var(--surface);padding:2rem;min-height:190px}.card:hover{border-color:var(--pink);transform:translateY(-2px);transition:.18s}.card-date{color:var(--pink);font:700 .75rem "Space Grotesk";letter-spacing:.12em}.card h3{font-size:1.4rem;margin:1rem 0}.card-meta{color:var(--muted);font-size:.75rem}
 .toolbar{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-bottom:3rem}.search span{display:block;font:700 .68rem "Space Grotesk";letter-spacing:.18em;color:var(--green);margin-bottom:.7rem}.search input{width:100%;background:transparent;color:var(--text);border:0;border-bottom:1px solid var(--line);padding:.9rem 0;font-size:1.3rem;outline:0}.search input:focus{border-color:var(--pink)}.stats{display:flex;align-items:baseline;gap:.6rem}.stats strong{font:700 2.3rem "Space Grotesk";color:var(--pink)}.stats span{font:700 .65rem "Space Grotesk";letter-spacing:.15em;color:var(--muted)}
 .group{margin-bottom:3.2rem}.groupHead{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:1rem}.groupHead h3{margin:0}.groupHead span{color:var(--muted);font-size:.7rem}.song{width:100%;display:grid;grid-template-columns:75px 1fr 110px 28px;gap:1rem;align-items:center;padding:1.1rem .4rem;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--text);text-align:left;cursor:pointer}.song:hover{background:rgba(229,27,141,.07)}.time{color:var(--pink);font:700 .7rem "Space Grotesk"}.muted{color:var(--muted)}
 .playerHead{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem}.playerHead h2{margin:.5rem 0;font-size:clamp(2rem,4vw,4rem)}.share{background:var(--pink);color:#fff;border:0;padding:1rem 1.2rem;font:700 .7rem "Space Grotesk";cursor:pointer}.share:disabled{opacity:.35}.playerLayout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.8fr);gap:1rem}.video{aspect-ratio:16/9;background:#000}.video iframe,#player{width:100%;height:100%}.setlist{background:var(--surface);border:1px solid var(--line);overflow:auto}.setlistHead{display:flex;justify-content:space-between;padding:1rem;border-bottom:1px solid var(--line);color:var(--green);font:700 .65rem "Space Grotesk"}.track{width:100%;display:grid;grid-template-columns:65px 1fr;padding:1rem;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--muted);text-align:left;cursor:pointer}.track:hover,.track.active{background:rgba(229,27,141,.08);color:var(--text)}.backlink{display:inline-block;margin-bottom:2rem;color:var(--green);font:700 .7rem "Space Grotesk";letter-spacing:.12em}
 footer{padding:3rem 8vw;border-top:1px solid var(--line);display:flex;gap:1.5rem;color:var(--muted);font-size:.72rem}footer b{color:var(--text)}
 @media(max-width:760px){nav{gap:.8rem}nav a{font-size:.6rem}.hero{padding:18vw 7vw 14vw}.hero h1{font-size:18vw}.section{padding:14vw 6vw}.cards{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.stats{display:none}.song{grid-template-columns:65px 1fr 26px}.song .datecol{display:none}.playerHead{align-items:start;flex-direction:column}.playerLayout{grid-template-columns:1fr}footer{flex-wrap:wrap}}
+
+/* SONG DATABASE v4 */
+.songTableWrap{border-top:1px solid var(--line)}
+.songTableHead,.songDbRow{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 120px;align-items:center;border-bottom:1px solid var(--line)}
+.songTableHead{background:rgba(255,255,255,.025)}
+.sortBtn{padding:1rem;border:0;background:transparent;color:var(--muted);text-align:left;font:700 .7rem "Space Grotesk";letter-spacing:.08em;cursor:pointer}
+.sortBtn:hover,.sortBtn.active{color:var(--text)}
+.countHead{text-align:right}
+.songTitleBtn{width:100%;display:flex;justify-content:space-between;gap:1rem;padding:1.15rem 1rem;border:0;background:transparent;color:var(--text);text-align:left;font-weight:700;cursor:pointer}
+.songTitleBtn:hover{color:var(--pink)}
+.songArtist,.songCount{padding:1.15rem 1rem;color:var(--muted)}
+.songCount{text-align:right;font:700 .85rem "Space Grotesk"}
+.expandMark{color:var(--pink);font-family:"Space Grotesk"}
+.songPerformances{background:rgba(255,255,255,.025);border-bottom:1px solid var(--line)}
+.performanceLink{display:grid;grid-template-columns:120px 1fr 24px;gap:1rem;align-items:center;padding:1rem 1rem 1rem 2rem;border-bottom:1px solid rgba(255,255,255,.07);color:var(--muted)}
+.performanceLink:last-child{border-bottom:0}
+.performanceLink:hover{background:rgba(229,27,141,.06);color:var(--text)}
+.performanceDate{color:var(--pink);font:700 .7rem "Space Grotesk"}
+.performanceTitle{font-size:.85rem}
+.performanceArrow{text-align:right}
+.trackInfo{display:inline}
+.trackArtist{color:var(--muted);font-size:.82em}
+@media(max-width:760px){
+  .songTableHead,.songDbRow{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 72px}
+  .sortBtn,.songTitleBtn,.songArtist,.songCount{padding:.95rem .6rem}
+  .performanceLink{grid-template-columns:95px 1fr 20px;padding:.9rem .7rem}
+}
