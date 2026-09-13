@@ -79,3 +79,64 @@ footer{padding:3rem 8vw;border-top:1px solid var(--line);display:flex;gap:1.5rem
   .artistSongCard{grid-template-columns:1fr 95px 22px;padding:.95rem .6rem}
   .artistSongCount{font-size:.62rem}
 }
+
+#archiveCards{grid-template-columns:1fr}
+
+
+/* TOP PAGE v7 */
+.homeHero{min-height:68vh}
+.heroActions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem}
+.primaryButton,.ghostButton{display:inline-flex;align-items:center;justify-content:center;padding:1rem 1.2rem;font:700 .68rem "Space Grotesk";letter-spacing:.1em;border:1px solid var(--line)}
+.primaryButton{background:var(--pink);border-color:var(--pink);color:#fff}
+.ghostButton:hover{border-color:var(--pink)}
+
+.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:2rem}
+.sectionHead h2{margin-bottom:0}
+.textLink{color:var(--muted);font:700 .68rem "Space Grotesk";letter-spacing:.1em;white-space:nowrap}
+.textLink:hover{color:var(--pink)}
+
+.latestList{border-top:1px solid var(--line)}
+.latestRow{display:grid;grid-template-columns:70px 135px 1fr 28px;gap:1rem;align-items:center;padding:1.25rem .6rem;border-bottom:1px solid var(--line)}
+.latestRow:hover{background:rgba(229,27,141,.06)}
+.latestNumber{color:var(--green);font:700 .65rem "Space Grotesk"}
+.latestDate{color:var(--pink);font:700 .72rem "Space Grotesk";letter-spacing:.06em}
+.latestTitle{font-size:1rem}
+.latestArrow{text-align:right;color:var(--muted)}
+.latestRow:hover .latestArrow{color:var(--pink)}
+
+.rankingTable{border-top:1px solid var(--line)}
+.rankingHead,.rankingRow{display:grid;grid-template-columns:80px minmax(0,1.4fr) minmax(0,1fr) 90px;gap:1rem;align-items:center}
+.rankingHead{padding:.85rem .6rem;border-bottom:1px solid var(--line);color:var(--muted);font:700 .62rem "Space Grotesk";letter-spacing:.1em}
+.rankingHead span:last-child{text-align:right}
+.rankingRow{padding:1.1rem .6rem;border-bottom:1px solid var(--line)}
+.rankNumber{font:700 1.15rem "Space Grotesk";color:var(--green)}
+.rankingSong,.rankingArtist{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rankingSong{font-weight:700}
+.rankingArtist{color:var(--muted);font-size:.9rem}
+.rankingSong span,.rankingArtist span{color:var(--pink);font-size:.75em}
+.rankingSong:hover,.rankingArtist:hover{color:var(--pink)}
+.rankingCount{text-align:right;font:700 1.15rem "Space Grotesk";color:var(--pink)}
+
+.socialGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.socialCard{position:relative;min-height:150px;padding:1.5rem;border:1px solid var(--line);background:var(--surface);display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto 1fr;gap:.6rem 1rem;align-items:start}
+.socialCard:hover{border-color:var(--pink);transform:translateY(-2px);transition:.18s}
+.socialIndex{color:var(--green);font:700 .65rem "Space Grotesk"}
+.socialCard strong{font:700 clamp(1.4rem,3vw,2.5rem) "Space Grotesk";letter-spacing:-.04em}
+.socialCard small{grid-column:2;color:var(--muted);font:700 .62rem "Space Grotesk";letter-spacing:.1em}
+.socialArrow{grid-column:3;grid-row:1 / span 2;align-self:center;color:var(--pink);font:700 .7rem "Space Grotesk"}
+.socialCardDisabled{opacity:.55}
+.socialCardDisabled:hover{border-color:var(--line);transform:none}
+.socialNote{margin-top:1rem;color:var(--muted);font-size:.75rem}
+.socialNote code{color:var(--green)}
+
+@media(max-width:760px){
+  .heroActions{flex-direction:column;align-items:stretch}
+  .sectionHead{align-items:start;flex-direction:column;gap:.8rem}
+  .latestRow{grid-template-columns:42px 105px 1fr 20px;padding:1rem .25rem}
+  .latestTitle{font-size:.88rem}
+  .rankingHead,.rankingRow{grid-template-columns:42px minmax(0,1fr) 68px}
+  .rankingHead span:nth-child(3),.rankingArtist{display:none}
+  .rankingHead span:last-child{text-align:right}
+  .rankingCount{font-size:1rem}
+  .socialGrid{grid-template-columns:1fr}
+}

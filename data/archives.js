@@ -11,12 +11,13 @@ const ARCHIVES = [
       },
       {
         "title": "KING",
-         artist: "Kanaria",
+        "artist": "Kanaria",
         "time": 321,
         "type": "song"
       },
       {
         "title": "ロウワー",
+        "artist": "ぬゆり",
         "time": 702,
         "type": "song"
       },
@@ -27,6 +28,7 @@ const ARCHIVES = [
       },
       {
         "title": "ヴィラン",
+        "artist": "てにをは",
         "time": 1111,
         "type": "song"
       }
@@ -44,11 +46,13 @@ const ARCHIVES = [
       },
       {
         "title": "怪獣の花唄",
+        "artist": "Vaundy",
         "time": 245,
         "type": "song"
       },
       {
         "title": "酔いどれ知らず",
+        "artist": "Kanaria",
         "time": 622,
         "type": "song"
       },
@@ -59,7 +63,7 @@ const ARCHIVES = [
       },
       {
         "title": "KING",
-         artist: "Kanaria",
+        "artist": "Kanaria",
         "time": 1284,
         "type": "song"
       }
